@@ -20,13 +20,20 @@ put '/:template/:from/:to' do
     # See http://docs.treasuredata.com/articles/result-into-web
     @td = Hash[payload['column_names'].zip(payload['data'].transpose)]
     s = erb template.to_sym, :layout => false
-    TWILIO_CLIENT.messages.create(
+    TWILIO_CLIENT.calls.create(
       from: "+{from}",
       to:   "+{to}",
-      body: s
+      url:  "http://t2dtwilio.herokuapp.com/twiml?s=#{s}"
     )
   rescue => e
     STDERR.puts e.backtrace
   end
 end
 
+get '/twiml' do
+  s = params[:s]
+  response = Twilio::TwiML::Response.new do |r|
+    r.Say s
+  end
+  puts response.text
+end
