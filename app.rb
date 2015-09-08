@@ -31,7 +31,7 @@ put '/:template/:from/:to' do
   end
 end
 
-get '/twiml' do
+post '/twiml' do
   s = params[:s]
   response = Twilio::TwiML::Response.new do |r|
     r.Say s
