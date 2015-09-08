@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'json'
 require 'twilio-ruby'
+require 'tilt/erb'
+
 put '/:template/:from/:to' do
   twilio_client = Twilio::REST::Client.new(
     ENV['TWILIO_ACCOUNT_SID'],
