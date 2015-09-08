@@ -23,7 +23,7 @@ put '/:template/:from/:to' do
     TWILIO_CLIENT.calls.create(
       from: "+{from}",
       to:   "+{to}",
-      url:  "http://t2dtwilio.herokuapp.com/twiml?s=#{s}"
+      url:  "http://td2twilio.herokuapp.com/twiml?s=#{s}"
     )
   rescue => e
     STDERR.puts e.backtrace
@@ -35,5 +35,5 @@ get '/twiml' do
   response = Twilio::TwiML::Response.new do |r|
     r.Say s
   end
-  puts response.text
+  response.text
 end
