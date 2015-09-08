@@ -1,14 +1,13 @@
 require 'sinatra'
 require 'json'
 require 'twilio-ruby'
-
-TWILIO_ACCOUNT_SID = ENV['TWILIO_ACCOUNT_SID']
-TWILIO_AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
-TWILIO_CLIENT = Twilio::REST::Client.new(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
 put '/:template/:from/:to' do
+  twilio_client = Twilio::REST::Client.new(
+    ENV['TWILIO_ACCOUNT_SID'],
+    ENV['TWILIO_AUTH_TOKEN'])
   template = params[:template]
   from = params[:from]
+
   to = params[:to]
   begin
     payload = JSON.parse(request.body.read)  
@@ -20,7 +19,7 @@ put '/:template/:from/:to' do
     # See http://docs.treasuredata.com/articles/result-into-web
     @td = Hash[payload['column_names'].zip(payload['data'].transpose)]
     s = erb template.to_sym, :layout => false
-    TWILIO_CLIENT.calls.create(
+    twilio_client.calls.create(
       from: "+{from}",
       to:   "+{to}",
       url:  "http://td2twilio.herokuapp.com/twiml?s=#{s}"
