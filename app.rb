@@ -1,12 +1,15 @@
 require 'sinatra'
 require 'json'
-require 'slack-notifier'
+require 'twilio-ruby'
 
-SLACK_NOTIFIER = Slack::Notifier.new(ENV['SLACK_WEBHOOK_URL'])
+TWILIO_ACCOUNT_SID = ENV['TWILIO_ACCOUNT_SID']
+TWILIO_AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
+TWILIO_CLIENT = Twilio::REST::Client.new(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-put '/:template' do
-  channel = params[:channel]
+put '/:template/:from/:to' do
   template = params[:template]
+  from = params[:from]
+  to = params[:to]
   begin
     payload = JSON.parse(request.body.read)  
     # payload is formatted like
@@ -17,7 +20,11 @@ put '/:template' do
     # See http://docs.treasuredata.com/articles/result-into-web
     @td = Hash[payload['column_names'].zip(payload['data'].transpose)]
     s = erb template.to_sym, :layout => false
-    SLACK_NOTIFIER.ping(s) 
+    TWILIO_CLIENT.messages.create(
+      from: "+{from}",
+      to:   "+{to}",
+      body: s
+    )
   rescue => e
     STDERR.puts e.backtrace
   end
