@@ -1,0 +1,10 @@
+Blog Unique Visitor Ranking for the last 24 hours (Top 10)
+
+
+<%
+(0..9).each do |idx|
+%>
+<%=idx+1%>. http://blog.treasuredata.com<%=@td['td_path'][idx]%> (<%=@td['c'][idx]%> unique visitors)
+<%
+end
+%>
