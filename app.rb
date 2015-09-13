@@ -18,8 +18,8 @@ put '/:template/:from/:to' do
     @td = Hash[payload['column_names'].zip(payload['data'].transpose)]
     s = erb template.to_sym, :layout => false
     worker_params = {
-      from: "+{from}",
-      to:   "+{to}",
+      from: "+#{from}",
+      to:   "+#{to}",
       message: s
     }
     iron_client = IronWorkerNG::Client.new
