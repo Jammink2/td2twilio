@@ -1,15 +1,11 @@
 require 'sinatra'
 require 'json'
 require 'twilio-ruby'
-require 'tilt/erb'
+require 'iron_worker_ng'
 
 put '/:template/:from/:to' do
-  twilio_client = Twilio::REST::Client.new(
-    ENV['TWILIO_ACCOUNT_SID'],
-    ENV['TWILIO_AUTH_TOKEN'])
   template = params[:template]
   from = params[:from]
-
   to = params[:to]
   begin
     payload = JSON.parse(request.body.read)  
@@ -21,11 +17,13 @@ put '/:template/:from/:to' do
     # See http://docs.treasuredata.com/articles/result-into-web
     @td = Hash[payload['column_names'].zip(payload['data'].transpose)]
     s = erb template.to_sym, :layout => false
-    twilio_client.calls.create(
+    worker_params = {
       from: "+{from}",
       to:   "+{to}",
-      url:  "http://td2twilio.herokuapp.com/twiml?s=#{s}"
-    )
+      message: s
+    }
+    iron_client = IronWorkerNG::Client.new
+    iron_client.tasks.create('twilio', worker_params)
   rescue => e
     STDERR.puts e.backtrace
   end
