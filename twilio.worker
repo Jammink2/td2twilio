@@ -1,0 +1,6 @@
+runtime "python"
+exec "twilio_worker.py"
+set_env "TWILIO_ACCOUNT_SID", "AC919dd65e2ed3045d52823382ffc97b82"
+set_env "TWILIO_AUTH_TOKEN", "beaabbb5b46df3f7385ca121dcf12b49"
+pip "twilio"
+pip "iron_worker"
