@@ -1,5 +1,5 @@
 {
-  "name": "Treasure Data to Twilio via Iron Worker",
+  "name": "TD to Twilio via Iron.io",
   "description": "A simple app to bridge Treasure Data and Twilio with Iron Worker",
   "repository": "https://github.com/treasure-data/td2twilio",
   "logo": "https://cdn.rawgit.com/treasure-data/td2slack/master/td2slack.svg",
