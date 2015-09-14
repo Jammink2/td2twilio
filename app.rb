@@ -3,7 +3,7 @@ require 'json'
 require 'twilio-ruby'
 require 'iron_worker_ng'
 
-put '/:template/:from/:to' do
+put '/:template/:to' do
   template = params[:template]
   from = params[:from]
   to = params[:to]
@@ -18,7 +18,7 @@ put '/:template/:from/:to' do
     @td = Hash[payload['column_names'].zip(payload['data'].transpose)]
     s = erb template.to_sym, :layout => false
     worker_params = {
-      from: "+#{from}",
+      from: "+#{ENV['TWILIO_NUMBER']}",
       to:   "+#{to}",
       message: s
     }
