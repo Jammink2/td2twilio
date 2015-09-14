@@ -1,4 +1,4 @@
-# td2slack
+# td2twilio
 
 Treasure Data to Twilio Bridge.
 
