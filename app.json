@@ -1,12 +1,12 @@
 {
-  "name": "Treasure Data to Slack",
-  "description": "A simple app to bridge Treasure Data and Slack",
-  "repository": "https://github.com/treasure-data/td2slack",
+  "name": "Treasure Data to Twilio via Iron Worker",
+  "description": "A simple app to bridge Treasure Data and Twilio with Iron Worker",
+  "repository": "https://github.com/treasure-data/td2twilio",
   "logo": "https://cdn.rawgit.com/treasure-data/td2slack/master/td2slack.svg",
-  "keywords": ["Treasure Data", "Slack"],
+  "keywords": ["Treasure Data", "Twilio"],
   "env": {
-     "SLACK_WEBHOOK_URL": {
-       "description": "This is the incoming webhook URL to post to Slack",
+     "TWILIO_NUMBER": {
+       "description": "This is the from # for Twilio to call",
        "required": true
     }
   }
