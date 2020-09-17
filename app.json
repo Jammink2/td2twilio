@@ -2,7 +2,7 @@
   "name": "TD to Twilio via Iron.io",
   "description": "A simple app to bridge Treasure Data and Twilio with Iron Worker",
   "repository": "https://github.com/treasure-data/td2twilio",
-  "logo": "https://cdn.rawgit.com/treasure-data/td2slack/master/td2slack.svg",
+  "logo": "https://cdn.jsdelivr.net/gh/treasure-data/td2slack@master/td2slack.svg",
   "keywords": ["Treasure Data", "Twilio"],
   "env": {
      "TWILIO_NUMBER": {
